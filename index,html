@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul 2: Analisis BEP & Technopreneurship</title>
+    <style>
+        :root {
+            --primary: #2563eb;       /* Biru Utama */
+            --primary-dark: #1e40af;  /* Biru Gelap */
+            --secondary: #475569;     /* Abu-abu Teks */
+            --success: #16a34a;       /* Hijau Sukses */
+            --danger: #dc2626;        /* Merah Error */
+            --bg-light: #f8fafc;      /* Background Halaman */
+            --card-bg: #ffffff;       /* Background Kartu */
+            --accent-techno: #4f46e5; /* Ungu Techno */
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background-color: var(--bg-light);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        header h1 { margin: 0; font-size: 2rem; font-weight: 800; letter-spacing: -0.5px; }
+        header p { margin: 10px 0 0; opacity: 0.9; font-size: 1.1rem; }
+        .badge {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        /* --- CARDS & SECTIONS --- */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+        
+        h2 { 
+            color: var(--primary); 
+            border-bottom: 2px solid #e2e8f0; 
+            padding-bottom: 10px; 
+            margin-top: 0; 
+            font-size: 1.5rem; 
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h3 { color: var(--secondary); margin-top: 25px; font-size: 1.2rem; }
+
+        /* --- FORMULA BOX --- */
+        .formula-box {
+            background: #eff6ff;
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            text-align: center;
+            font-weight: bold;
+            color: var(--primary-dark);
+        }
+        .fraction { display: inline-block; vertical-align: middle; text-align: center; margin: 0 5px; }
+        .numerator { border-bottom: 2px solid currentColor; display: block; padding: 0 5px; }
+        .denominator { display: block; padding: 0 5px; }
+
+        /* --- TECHNO SECTION --- */
+        .techno-card {
+            background: linear-gradient(to right, #1e1b4b, #312e81);
+            color: white;
+            border: none;
+        }
+        .techno-card h2 { color: #818cf8; border-color: #4338ca; }
+        .techno-card h3 { color: #c7d2fe; }
+        .techno-highlight {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* --- LKPD (LEMBAR KERJA) --- */
+        .lkpd-section {
+            border: 2px dashed var(--primary);
+            background-color: #f8fafc;
+            position: relative;
+        }
+        .lkpd-tag {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; margin-bottom: 6px; font-weight: 600; color: var(--secondary); }
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+        .input-group input:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .calc-btn {
+            background-color: var(--success);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+        .calc-btn:hover { background-color: #15803d; }
+
+        .result-box {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        .result-box.success { background-color: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
+        .result-box.error { background-color: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- QUIZ STYLES --- */
+        .quiz-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .quiz-question { font-weight: 600; margin-bottom: 10px; display: block; }
+        .quiz-options { display: grid; gap: 8px; }
+        .option-btn {
+            padding: 10px 15px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 8px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+        .option-btn:hover { border-color: var(--primary); background: #eff6ff; }
+        .option-btn.correct { background: #dcfce7; border-color: var(--success); color: #14532d; font-weight: bold; }
+        .option-btn.wrong { background: #fee2e2; border-color: var(--danger); color: #7f1d1d; opacity: 0.7; }
+        
+        .feedback { 
+            margin-top: 10px; 
+            padding: 10px; 
+            border-radius: 6px; 
+            font-size: 0.9rem; 
+            display: none; 
+        }
+
+        /* --- PRINT BUTTON & FOOTER --- */
+        .print-btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1rem;
+        }
+        .print-btn:hover { background-color: #334155; }
+
+        footer { text-align: center; padding: 40px; color: var(--secondary); font-size: 0.9rem; }
+
+        /* --- PRINT MEDIA QUERY --- */
+        @media print {
+            body { background: white; -webkit-print-color-adjust: exact; }
+            header { background: white; color: black; padding: 10px; border-bottom: 2px solid black; box-shadow: none; }
+            header h1 { font-size: 1.5rem; }
+            .badge, .calc-btn, .print-btn { display: none !important; }
+            .card { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
+            .techno-card { background: white; color: black; border: 1px solid black; }
+            .techno-card h2, .techno-card h3 { color: black; }
+            .techno-highlight { background: #f0f0f0; border: 1px solid #ccc; color: black; }
+            .lkpd-section { border: 2px solid black; }
+            .lkpd-tag { background: black; color: white; border: 1px solid black; top: -12px; }
+            input, textarea { border: 1px solid black; }
+            .result-box { display: block !important; border: 1px solid black; } /* Force show result if printed after calc */
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="badge">MODUL PEMBELAJARAN VOKASI</div>
+    <h1>Analisis BEP & Evaluasi Bisnis</h1>
+    <p>Teori Dasar, Penerapan Technopreneurship, dan Praktik Mandiri</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <h2>📚 I. Kajian Teoritis: Break Even Point</h2>
+        <p><strong>Break Even Point (Titik Impas)</strong> adalah kondisi di mana total pendapatan usaha sama persis dengan total biaya yang dikeluarkan. Pada titik ini, pengusaha <strong>tidak rugi dan tidak untung</strong> (Profit = 0).</p>
+        
+        <h3>Komponen Utama BEP:</h3>
+        <ul>
+            <li><strong>Biaya Tetap (Fixed Cost - FC):</strong> Biaya rutin bulanan yang nilainya tetap (Sewa tempat, Gaji karyawan tetap, Internet/WiFi).</li>
+            <li><strong>Biaya Variabel (Variable Cost - VC):</strong> Biaya yang berubah mengikuti jumlah produksi (Bahan baku, Listrik per unit, Kemasan).</li>
+            <li><strong>Harga Jual (Price - P):</strong> Harga yang dibebankan ke konsumen per unit.</li>
+        </ul>
+
+        <div class="formula-box">
+            Rumus BEP (Unit) = 
+            <div class="fraction">
+                <span class="numerator">Biaya Tetap (FC)</span>
+                <span class="denominator">Harga Jual (P) - Biaya Variabel (VC)</span>
+            </div>
+        </div>
+        <p style="text-align: center; font-size: 0.9rem; color: var(--secondary);"><em>Catatan: (Harga Jual - Biaya Variabel) disebut Margin Kontribusi.</em></p>
+    </div>
+
+    <div class="card">
+        <h2>🔍 II. Studi Kasus: "TKJ-Fix"</h2>
+        <p>Seorang siswa membuka jasa instalasi ulang laptop di rumahnya.</p>
+        
+        <table style="width:100%; border-collapse: collapse; margin-bottom: 15px;">
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 8px;">Biaya Tetap (Listrik & Internet)</td>
+                <td style="padding: 8px; font-weight: bold; text-align: right;">Rp 200.000 / bln</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 8px;">Biaya Variabel (Lisensi/DVD)</td>
+                <td style="padding: 8px; font-weight: bold; text-align: right;">Rp 50.000 / unit</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px;">Harga Jual Jasa</td>
+                <td style="padding: 8px; font-weight: bold; text-align: right;">Rp 100.000 / unit</td>
+            </tr>
+        </table>
+
+        <div style="background: #f1f5f9; padding: 15px; border-radius: 8px;">
+            <strong>Perhitungan:</strong><br>
+            BEP = 200.000 / (100.000 - 50.000)<br>
+            BEP = 200.000 / 50.000<br>
+            <strong style="color: var(--primary);">BEP = 4 Unit Laptop</strong>
+        </div>
+        <p><em>Artinya: Siswa wajib mendapatkan minimal 4 pelanggan setiap bulan hanya untuk menutup modal operasional.</em></p>
+    </div>
+
+    <div class="card techno-card">
+        <h2>🚀 III. Mindset Technopreneur</h2>
+        <p>Dalam bisnis teknologi (Aplikasi, Software, Konten Digital), struktur BEP sangat unik dan berpotensi keuntungan besar.</p>
+        
+        <div class="techno-highlight">
+            <h3>Konsep: High Fixed, Zero Variable</h3>
+            <p>Membuat software butuh modal besar di awal (Laptop canggih, Waktu coding berbulan-bulan). Namun, setelah jadi, biaya untuk menggandakan produk ke 1.000 orang hampir <strong>NOL Rupiah</strong>.</p>
+            <p>👉 <em>Begitu melewati titik BEP, keuntungan bisnis teknologi melonjak drastis (Skalabilitas Tinggi).</em></p>
+        </div>
+
+        <h3>Evaluasi Produk Digital:</h3>
+        <ul>
+            <li><strong>User Experience (UX):</strong> Apakah aplikasi mudah digunakan?</li>
+            <li><strong>Churn Rate:</strong> Berapa % pengguna yang berhenti berlangganan bulan ini?</li>
+        </ul>
+    </div>
+
+    <div class="card lkpd-section">
+        <div class="lkpd-tag">LKPD - PRAKTIK SISWA</div>
+        <h2 style="margin-top: 15px;">📝 IV. Lembar Kerja: Simulasi Bisnis Kamu</h2>
+        <p>Isilah formulir di bawah ini dengan rencana bisnis teknologi sederhanamu.</p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+            <div class="input-group">
+                <label>Nama Siswa:</label>
+                <input type="text" placeholder="Nama Lengkap...">
+            </div>
+            <div class="input-group">
+                <label>Kelas/Jurusan:</label>
+                <input type="text" placeholder="Misal: XI TKJ 2">
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Ide Produk/Jasa:</label>
+            <input type="text" placeholder="Contoh: Jasa Desain Web / Voucher WiFi / Service HP">
+        </div>
+
+        <hr style="border: 0; border-top: 1px dashed #cbd5e1; margin: 20px 0;">
+
+        <h3 style="margin-top:0;">A. Hitung Titik Impas (BEP)</h3>
+        <div class="input-group">
+            <label>1. Total Biaya Tetap per Bulan (Rp):</label>
+            <input type="number" id="fcInput" placeholder="Contoh: 150000 (Kuota, Listrik)">
+            <small style="color: var(--secondary)">Biaya yang PASTI keluar walau tidak ada penjualan.</small>
+        </div>
+        
+        <div class="input-group">
+            <label>2. Biaya Variabel per Unit (Rp):</label>
+            <input type="number" id="vcInput" placeholder="Contoh: 20000 (Bensin, Bahan)">
+            <small style="color: var(--secondary)">Biaya modal per satu kali produksi/layanan.</small>
+        </div>
+
+        <div class="input-group">
+            <label>3. Rencana Harga Jual per Unit (Rp):</label>
+            <input type="number" id="pInput" placeholder="Contoh: 50000">
+        </div>
+
+        <button class="calc-btn" onclick="hitungBEP()">HITUNG BEP SAYA</button>
+
+        <div id="lkpdResult" class="result-box">
+            <h4 style="margin: 0 0 10px 0;">Hasil Analisis:</h4>
+            <div id="resultContent"></div>
+        </div>
+
+        <h3 style="margin-top: 25px;">B. Strategi & Evaluasi</h3>
+        <div class="input-group">
+            <label>Jika target BEP di atas belum tercapai, strategi apa yang akan kamu lakukan? (Pemasaran/Operasional)</label>
+            <textarea rows="4" placeholder="Jelaskan rencanamu disini..."></textarea>
+        </div>
+
+        <button class="print-btn" onclick="window.print()">
+            🖨️ Cetak / Simpan sebagai PDF (Kumpulkan ke Guru)
+        </button>
+    </div>
+
+    <div class="card">
+        <h2>🧠 V. Kuis Pemahaman</h2>
+        <div id="quiz-container">
+            </div>
+        <div id="final-score" style="text-align: center; font-weight: bold; font-size: 1.2rem; display: none; margin-top: 20px; color: var(--primary);"></div>
+    </div>
+
+</div>
+
+<footer>
+    <p>&copy; 2024 Modul Kewirausahaan Vokasi.<br>Dibuat untuk mencetak Technopreneur Masa Depan.</p>
+</footer>
+
+<script>
+    /* --- LOGIKA KALKULATOR BEP (LKPD) --- */
+    function hitungBEP() {
+        // Ambil nilai
+        const fc = parseFloat(document.getElementById('fcInput').value);
+        const vc = parseFloat(document.getElementById('vcInput').value);
+        const p = parseFloat(document.getElementById('pInput').value);
+        const resultBox = document.getElementById('lkpdResult');
+        const content = document.getElementById('resultContent');
+
+        // Validasi Input Kosong
+        if (isNaN(fc) || isNaN(vc) || isNaN(p)) {
+            alert("Harap isi semua kolom angka (Biaya Tetap, Variabel, dan Harga)!");
+            return;
+        }
+
+        // Tampilkan Box
+        resultBox.style.display = 'block';
+
+        // Validasi Logika Bisnis (Harga < Modal)
+        if (p <= vc) {
+            resultBox.className = "result-box error";
+            content.innerHTML = `
+                <strong>⚠️ PERINGATAN BISNIS:</strong><br>
+                Harga Jual (Rp ${p.toLocaleString()}) lebih kecil atau sama dengan Modal Variabel (Rp ${vc.toLocaleString()}).<br>
+                Anda tidak akan pernah untung. <strong>Naikkan Harga Jual</strong> atau <strong>Tekan Biaya Produksi!</strong>
+            `;
+            return;
+        }
+
+        // Hitung BEP
+        const margin = p - vc;
+        const bep = fc / margin;
+        const bepRounded = Math.ceil(bep); // Pembulatan ke atas
+
+        resultBox.className = "result-box success";
+        content.innerHTML = `
+            <div style="font-size: 1.1rem; margin-bottom: 10px;">
+                Target Minimal Penjualan: <strong style="font-size: 1.5rem;">${bepRounded} Unit</strong> per Bulan.
+            </div>
+            <ul style="margin: 0; padding-left: 20px; font-size: 0.95rem;">
+                <li>Margin Kontribusi (Untung Kotor) per unit: Rp ${margin.toLocaleString()}</li>
+                <li>Pada unit ke-${bepRounded}, biaya tetap Rp ${fc.toLocaleString()} lunas tertutupi.</li>
+                <li>Keuntungan bersih dimulai dari penjualan unit ke-${bepRounded + 1}.</li>
+            </ul>
+        `;
+    }
+
+    /* --- LOGIKA KUIS --- */
+    const quizData = [
+        {
+            q: "Apa arti kondisi BEP bagi seorang pengusaha?",
+            opts: ["Keuntungan maksimal", "Titik Impas (Balik Modal)", "Kerugian total", "Target Investor"],
+            correct: 1,
+            hint: "Pendapatan = Pengeluaran."
+        },
+        {
+            q: "Mana yang termasuk Biaya Tetap (Fixed Cost) usaha servis komputer?",
+            opts: ["Beli Pasta Processor", "Bensin antar barang", "Biaya Internet Bulanan", "Upah lembur"],
+            correct: 2,
+            hint: "Biaya ini dibayar rutin tiap bulan, tak peduli ada order atau tidak."
+        },
+        {
+            q: "Apa keunggulan utama Produk Digital (Software) terkait biaya?",
+            opts: ["Biaya Variabel (Copy produk) hampir Nol", "Biaya pembuatan awal murah", "Tidak butuh marketing", "Harga selalu murah"],
+            correct: 0,
+            hint: "Sekali coding, bisa dicopy ke jutaan orang tanpa biaya tambahan."
+        },
+        {
+            q: "Rumus BEP Unit yang benar adalah...",
+            opts: ["FC / (P + VC)", "FC / (P - VC)", "(P - VC) / FC", "VC / P"],
+            correct: 1,
+            hint: "Biaya Tetap dibagi Margin Kontribusi."
+        },
+        {
+            q: "Jika usaha sepi (di bawah BEP), langkah evaluasi yang tepat adalah...",
+            opts: ["Tutup usaha langsung", "Naikkan harga setinggi mungkin", "Audit pemasaran & efisiensi biaya", "Marah pada pelanggan"],
+            correct: 2,
+            hint: "Cari akar masalahnya (kenapa sepi? kenapa boros?)."
+        }
+    ];
+
+    const quizContainer = document.getElementById('quiz-container');
+    let score = 0;
+    let answeredCount = 0;
+
+    // Render Soal
+    quizData.forEach((item, index) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = "quiz-item";
+        
+        // Soal
+        const qTitle = document.createElement('span');
+        qTitle.className = "quiz-question";
+        qTitle.innerText = `${index + 1}. ${item.q}`;
+        itemDiv.appendChild(qTitle);
+
+        // Opsi
+        const optsDiv = document.createElement('div');
+        optsDiv.className = "quiz-options";
+        
+        item.opts.forEach((optText, optIndex) => {
+            const btn = document.createElement('button');
+            btn.className = "option-btn";
+            btn.innerText = optText;
+            btn.onclick = () => checkAnswer(btn, index, optIndex, item.correct, item.hint);
+            optsDiv.appendChild(btn);
+        });
+        itemDiv.appendChild(optsDiv);
+
+        // Feedback Box
+        const fbDiv = document.createElement('div');
+        fbDiv.id = `fb-${index}`;
+        fbDiv.className = "feedback";
+        itemDiv.appendChild(fbDiv);
+
+        quizContainer.appendChild(itemDiv);
+    });
+
+    function checkAnswer(btn, qIndex, optIndex, correctIndex, hint) {
+        const parent = btn.parentElement; // div.quiz-options
+        const fbBox = document.getElementById(`fb-${qIndex}`);
+        
+        // Cegah klik berulang
+        if (parent.getAttribute('data-answered') === 'true') return;
+        parent.setAttribute('data-answered', 'true');
+        answeredCount++;
+
+        const allBtns = parent.querySelectorAll('.option-btn');
+        
+        if (optIndex === correctIndex) {
+            btn.classList.add('correct');
+            fbBox.innerHTML = `✅ <strong>Benar!</strong> ${hint}`;
+            fbBox.style.backgroundColor = "#dcfce7";
+            fbBox.style.color = "#166534";
+            fbBox.style.display = "block";
+            score++;
+        } else {
+            btn.classList.add('wrong');
+            allBtns[correctIndex].classList.add('correct'); // Tunjukkan yang benar
+            fbBox.innerHTML = `❌ <strong>Kurang tepat.</strong> Jawaban benar: "${quizData[qIndex].opts[correctIndex]}".`;
+            fbBox.style.backgroundColor = "#fee2e2";
+            fbBox.style.color = "#991b1b";
+            fbBox.style.display = "block";
+        }
+
+        // Tampilkan skor jika semua sudah dijawab
+        if (answeredCount === quizData.length) {
+            const scoreBox = document.getElementById('final-score');
+            scoreBox.innerText = `Skor Akhir Kamu: ${score} / ${quizData.length}`;
+            scoreBox.style.display = 'block';
+        }
+    }
+</script>
+
+</body>
+</html>
